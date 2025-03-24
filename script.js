@@ -4,12 +4,27 @@ const clearFavorites = document.getElementById('clear-favorites')
 const pokemonCardContainer = document.getElementById('pokemon-card')
 
 //Event Listeners 
-generateBtn.addEventListener('click', fetchPokeData)
+generateBtn.addEventListener('click', function () {
+  // Get a random Pokemon ID
+  const randomId = randomPokemon();
+  // Pass it to the fetch function
+  fetchPokeData(randomId);
+})
 
+//Generate Random ID
+function randomPokemon() {
+  let max = 152;
+  let min = 1;
+  let pokemonId = Math.floor(Math.random() * (max - min) + min);
+  console.log("Random Pokemon ID:", pokemonId);
+  return pokemonId
+}
 
 // fetch API Data
-async function fetchPokeData() {
-  const url = "https://pokeapi.co/api/v2/pokemon/55/"
+async function fetchPokeData(pokemonId) {
+  // Default to ID 25 (Pikachu) if no ID is provided
+  const id = pokemonId || 25;
+  const url = `https://pokeapi.co/api/v2/pokemon/${id}/`
   try {
     const response = await fetch(url)
     if (!response.ok) {
