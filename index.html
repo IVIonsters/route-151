@@ -12,8 +12,52 @@
     />
     <title>poke-card-generator</title>
   </head>
-  <body>
-    <h1 class="bg-yellow-500">Hello, Poke Fans</h1>
+  <body
+    class="bg-gray-900 text-white min-h-screen flex flex-col items-center p-4"
+  >
+    <!-- Header -->
+    <header class="mb-6 text-center">
+      <h1 class="text-4xl font-bold mb-2">Pokémon Card Generator</h1>
+      <p class="text-gray-400">Catch random Pokémon & save your favorites!</p>
+    </header>
+
+    <!-- Control Buttons -->
+    <div class="flex gap-4 mb-8">
+      <button
+        id="generate"
+        class="bg-yellow-400 text-black px-4 py-2 rounded hover:bg-yellow-300 transition"
+      >
+        Generate Pokémon
+      </button>
+      <button
+        id="clear-favorites"
+        class="bg-red-500 px-4 py-2 rounded hover:bg-red-400 transition"
+      >
+        Clear Favorites
+      </button>
+    </div>
+
+    <!-- Pokémon Card Display -->
+    <main class="flex flex-col items-center gap-6 w-full max-w-md">
+      <section
+        id="pokemon-card"
+        class="w-full"
+      ></section>
+
+      <!-- Favorites Section -->
+      <section
+        id="favorites"
+        class="w-full"
+      >
+        <h2 class="text-2xl mb-4 border-b border-gray-700 pb-2">
+          Favorite Pokémon
+        </h2>
+        <div
+          id="favorite-cards"
+          class="grid grid-cols-2 gap-4"
+        ></div>
+      </section>
+    </main>
     <script src="script.js"></script>
   </body>
 </html>
