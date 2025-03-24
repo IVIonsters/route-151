@@ -31,7 +31,7 @@ async function fetchPokeData(pokemonId) {
       throw new Error(`Response statues: ${response.status}`)
     }
     const pokemon = await response.json();
-    console.log(pokemon)
+    // console.log(pokemon)
     displayPokemon(pokemon)
   } catch (error) {
     console.error("API failed to find data", error.message)
@@ -107,7 +107,7 @@ function displayPokemon(pokemon) {
         </div>
         
         <!-- Save Button -->
-        <button class="favorite-btn w-full bg-white/90 text-gray-800 py-3 px-4 rounded-xl font-semibold shadow-lg hover:bg-white transition-all duration-300 flex justify-center items-center gap-2" data-id="${pokemon.id}">
+        <button id="save-btn" class="favorite-btn w-full bg-white/90 text-gray-800 py-3 px-4 rounded-xl font-semibold shadow-lg hover:bg-white transition-all duration-300 flex justify-center items-center gap-2" data-id="${pokemon.id}">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
             <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" />
           </svg>
