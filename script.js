@@ -50,71 +50,73 @@ function displayPokemon(pokemon) {
 
   // Create HTML for the pokemon card
   const pokemonCard = `
-    <div class="pokemon-card relative overflow-hidden rounded-2xl shadow-2xl transition-all duration-300 hover:shadow-${typeColor}/50 transform hover:-translate-y-1">
+    <article class="pokemon-card relative overflow-hidden rounded-2xl shadow-2xl transition-all duration-300 hover:shadow-${typeColor}/50 transform hover:-translate-y-1">
       <!-- Card Background with Gradient -->
       <div class="absolute inset-0 bg-gradient-to-br ${gradientColors} opacity-90"></div>
       
       <!-- Card Content -->
       <div class="relative p-6 z-10">
         <!-- Card Header with Name and ID -->
-        <div class="card-header flex justify-between items-center mb-4">
+        <header class="card-header flex justify-between items-center mb-4">
           <h2 class="text-2xl font-bold capitalize text-white">${pokemon.name}</h2>
           <span class="text-white/70 font-mono bg-black/20 px-2 py-1 rounded-md text-sm">#${formattedId}</span>
-        </div>
+        </header>
         
         <!-- Pokemon Image -->
-        <div class="card-image bg-white/10 backdrop-blur-sm rounded-xl flex justify-center items-center p-4 mb-6 border border-white/20">
+        <figure class="card-image bg-white/10 backdrop-blur-sm rounded-xl flex justify-center items-center p-4 mb-6 border border-white/20">
           <img src="${pokemon.sprites.front_default}" alt="${pokemon.name}" class="w-40 h-40 object-contain drop-shadow-lg">
-        </div>
+        </figure>
         
         <!-- Type Badges -->
-        <div class="type-badges flex gap-2 mb-6">
+        <ul class="type-badges flex gap-2 mb-6">
           ${pokemon.types.map(typeInfo =>
-    `<span class="type-badge px-4 py-1 rounded-full text-xs font-semibold bg-white/20 backdrop-blur-sm border border-white/10 shadow-md">${typeInfo.type.name}</span>`
+    `<li class="type-badge px-4 py-1 rounded-full text-xs font-semibold bg-white/20 backdrop-blur-sm border border-white/10 shadow-md">${typeInfo.type.name}</li>`
   ).join('')}
-        </div>
+        </ul>
         
         <!-- Stats -->
-        <div class="stats-container bg-black/20 backdrop-blur-sm rounded-xl p-4 mb-6 border border-white/10">
+        <section class="stats-container bg-black/20 backdrop-blur-sm rounded-xl p-4 mb-6 border border-white/10">
           <h3 class="text-lg font-semibold mb-3 text-white">Stats</h3>
-          <div class="stats space-y-2">
+          <dl class="stats space-y-2">
             ${pokemon.stats.map(stat => {
     const percentage = (stat.base_stat / 255) * 100;
     return `
               <div class="stat">
                 <div class="flex justify-between items-center mb-1">
-                  <span class="stat-name text-white/70 text-sm">${formatStatName(stat.stat.name)}</span>
-                  <span class="stat-value text-white font-medium">${stat.base_stat}</span>
+                  <dt class="stat-name text-white/70 text-sm">${formatStatName(stat.stat.name)}</dt>
+                  <dd class="stat-value text-white font-medium">${stat.base_stat}</dd>
                 </div>
                 <div class="w-full bg-black/30 rounded-full h-2">
                   <div class="bg-white/80 h-2 rounded-full" style="width: ${percentage}%"></div>
                 </div>
               </div>`;
   }).join('')}
-          </div>
-        </div>
+          </dl>
+        </section>
         
         <!-- Physical Attributes -->
-        <div class="physical-attrs grid grid-cols-2 gap-4 mb-6">
-          <div class="attr bg-black/20 backdrop-blur-sm p-3 rounded-xl text-center border border-white/10">
-            <div class="text-white/70 text-xs mb-1">Height</div>
-            <div class="text-white font-medium">${(pokemon.height / 10).toFixed(1)}m</div>
-          </div>
-          <div class="attr bg-black/20 backdrop-blur-sm p-3 rounded-xl text-center border border-white/10">
-            <div class="text-white/70 text-xs mb-1">Weight</div>
-            <div class="text-white font-medium">${(pokemon.weight / 10).toFixed(1)}kg</div>
-          </div>
-        </div>
+        <section class="physical-attrs grid grid-cols-2 gap-4 mb-6">
+          <dl class="attr bg-black/20 backdrop-blur-sm p-3 rounded-xl text-center border border-white/10">
+            <dt class="text-white/70 text-xs mb-1">Height</dt>
+            <dd class="text-white font-medium">${(pokemon.height / 10).toFixed(1)}m</dd>
+          </dl>
+          <dl class="attr bg-black/20 backdrop-blur-sm p-3 rounded-xl text-center border border-white/10">
+            <dt class="text-white/70 text-xs mb-1">Weight</dt>
+            <dd class="text-white font-medium">${(pokemon.weight / 10).toFixed(1)}kg</dd>
+          </dl>
+        </section>
         
         <!-- Save Button -->
-        <button id="save-btn" class="favorite-btn w-full bg-white/90 text-gray-800 py-3 px-4 rounded-xl font-semibold shadow-lg hover:bg-white transition-all duration-300 flex justify-center items-center gap-2" data-id="${pokemon.id}">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-            <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" />
-          </svg>
-          Save to Favorites
-        </button>
+        <footer>
+          <button id="save-btn" class="favorite-btn w-full bg-white/90 text-gray-800 py-3 px-4 rounded-xl font-semibold shadow-lg hover:bg-white transition-all duration-300 flex justify-center items-center gap-2" data-id="${pokemon.id}">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" />
+            </svg>
+            Save to Favorites
+          </button>
+        </footer>
       </div>
-    </div>
+    </article>
   `;
 
   // Insert the card into the container
