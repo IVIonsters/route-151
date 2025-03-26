@@ -2,6 +2,7 @@
 const generateBtn = document.getElementById('generate')
 const clearFavorites = document.getElementById('clear-favorites')
 const pokemonCardContainer = document.getElementById('pokemon-card')
+const favoriteCardsContainer = document.getElementById('favorite-cards')
 
 //Event Listeners 
 generateBtn.addEventListener('click', function () {
@@ -9,6 +10,45 @@ generateBtn.addEventListener('click', function () {
   const randomId = randomPokemon();
   // Pass it to the fetch function
   fetchPokeData(randomId);
+})
+
+// Add event listener for Clear Favorites button
+clearFavorites.addEventListener('click', clearAllFavorites);
+
+// Current Pokemon Data
+let currentPokemon = ''
+
+// Save to local storage
+pokemonCardContainer.addEventListener('click', function (e) {
+  if (e.target.closest('.favorite-btn')) {
+    const pokemonToSave = {
+      id: currentPokemon.id,
+      name: currentPokemon.name,
+      sprite: currentPokemon.sprites.front_default,
+      types: currentPokemon.types,
+      stats: currentPokemon.stats
+    }
+
+    // Get existing favorites array or create empty array if none exists
+    const favorites = JSON.parse(localStorage.getItem('pokemonFavorites')) || [];
+
+    // Check if this Pokemon already exists in favorites
+    const isDuplicate = favorites.some(pokemon => pokemon.id === currentPokemon.id);
+
+    if (!isDuplicate) {
+      // Add new Pokemon to favorites array
+      favorites.push(pokemonToSave);
+
+      // Save back to localStorage (stringify the array)
+      localStorage.setItem('pokemonFavorites', JSON.stringify(favorites));
+
+      console.log(`Added ${pokemonToSave.name} to favorites!`);
+      // Update the favorites display
+      displayFavorites();
+    } else {
+      console.log(`${pokemonToSave.name} is already in your favorites!`);
+    }
+  }
 })
 
 //Generate Random ID
@@ -121,6 +161,9 @@ function displayPokemon(pokemon) {
 
   // Insert the card into the container
   pokemonCardContainer.innerHTML = pokemonCard;
+
+  //store current Pokemon
+  currentPokemon = pokemon
 }
 
 // Helper function to format stat names
@@ -187,4 +230,65 @@ function getTypeGradient(type) {
 
   return typeGradients[type] || 'from-slate-500 to-slate-700';
 }
+
+// Function to display all favorites
+function displayFavorites() {
+  // Get favorites from localStorage
+  const favorites = JSON.parse(localStorage.getItem('pokemonFavorites')) || [];
+  
+  // Clear the favorites container
+  favoriteCardsContainer.innerHTML = '';
+  
+  if (favorites.length === 0) {
+    // Show empty state
+    favoriteCardsContainer.innerHTML = `
+      <div class="empty-state text-center p-8 col-span-2 text-slate-500 italic">
+        Generate and save Pokémon to see them here
+      </div>
+    `;
+    return;
+  }
+  
+  // Create HTML for each favorite
+  favorites.forEach(pokemon => {
+    const primaryType = pokemon.types[0].type.name;
+    const gradientColors = getTypeGradient(primaryType);
+    
+    const miniCard = `
+      <article class="favorite-card relative overflow-hidden rounded-xl shadow-lg transition-all duration-300 transform hover:-translate-y-1">
+        <!-- Card Background -->
+        <div class="absolute inset-0 bg-gradient-to-br ${gradientColors} opacity-90"></div>
+        
+        <!-- Card Content -->
+        <div class="relative p-3 z-10 flex items-center gap-3">
+          <figure class="rounded-full bg-white/10 p-2 backdrop-blur-sm">
+            <img src="${pokemon.sprite}" alt="${pokemon.name}" class="w-16 h-16">
+          </figure>
+          <div>
+            <h3 class="text-lg font-semibold capitalize text-white">${pokemon.name}</h3>
+            <ul class="flex gap-1 mt-1">
+              ${pokemon.types.map(typeInfo => 
+                `<li class="text-xs px-2 py-0.5 rounded-full bg-white/20 backdrop-blur-sm">${typeInfo.type.name}</li>`
+              ).join('')}
+            </ul>
+          </div>
+        </div>
+      </article>
+    `;
+    
+    favoriteCardsContainer.innerHTML += miniCard;
+  });
+}
+
+// Function to clear all favorites
+function clearAllFavorites() {
+  // Clear localStorage
+  localStorage.removeItem('pokemonFavorites');
+  
+  // Update display
+  displayFavorites();
+}
+
+// Initialize the favorites display on page load
+window.addEventListener('DOMContentLoaded', displayFavorites);
 
