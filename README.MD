@@ -95,7 +95,7 @@ This project follows a multi-tier development pathway designed to build skills i
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/poke-card-generator.git
+git clone https://github.com/IVIonsters/poke-card-generator.git
 
 # Navigate to project directory
 cd poke-card-generator
