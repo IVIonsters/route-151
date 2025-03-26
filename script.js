@@ -235,10 +235,10 @@ function getTypeGradient(type) {
 function displayFavorites() {
   // Get favorites from localStorage
   const favorites = JSON.parse(localStorage.getItem('pokemonFavorites')) || [];
-  
+
   // Clear the favorites container
   favoriteCardsContainer.innerHTML = '';
-  
+
   if (favorites.length === 0) {
     // Show empty state
     favoriteCardsContainer.innerHTML = `
@@ -248,12 +248,12 @@ function displayFavorites() {
     `;
     return;
   }
-  
+
   // Create HTML for each favorite
   favorites.forEach(pokemon => {
     const primaryType = pokemon.types[0].type.name;
     const gradientColors = getTypeGradient(primaryType);
-    
+
     const miniCard = `
       <article class="favorite-card relative overflow-hidden rounded-xl shadow-lg transition-all duration-300 transform hover:-translate-y-1">
         <!-- Card Background -->
@@ -267,15 +267,15 @@ function displayFavorites() {
           <div>
             <h3 class="text-lg font-semibold capitalize text-white">${pokemon.name}</h3>
             <ul class="flex gap-1 mt-1">
-              ${pokemon.types.map(typeInfo => 
-                `<li class="text-xs px-2 py-0.5 rounded-full bg-white/20 backdrop-blur-sm">${typeInfo.type.name}</li>`
-              ).join('')}
+              ${pokemon.types.map(typeInfo =>
+      `<li class="text-xs px-2 py-0.5 rounded-full bg-white/20 backdrop-blur-sm">${typeInfo.type.name}</li>`
+    ).join('')}
             </ul>
           </div>
         </div>
       </article>
     `;
-    
+
     favoriteCardsContainer.innerHTML += miniCard;
   });
 }
@@ -284,7 +284,7 @@ function displayFavorites() {
 function clearAllFavorites() {
   // Clear localStorage
   localStorage.removeItem('pokemonFavorites');
-  
+
   // Update display
   displayFavorites();
 }
