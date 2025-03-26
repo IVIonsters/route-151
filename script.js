@@ -15,6 +15,20 @@ generateBtn.addEventListener('click', function () {
 // Add event listener for Clear Favorites button
 clearFavorites.addEventListener('click', clearAllFavorites);
 
+// Add event listener for favorite cards
+favoriteCardsContainer.addEventListener('dblclick', function (e) {
+  const favoriteCard = e.target.closest('.favorite-card');
+  if (favoriteCard) {
+    const pokemonId = favoriteCard.dataset.id;
+    const favorites = JSON.parse(localStorage.getItem('pokemonFavorites')) || [];
+    const pokemon = favorites.find(p => p.id.toString() === pokemonId);
+
+    if (pokemon) {
+      showPokemonOverlay(pokemon);
+    }
+  }
+});
+
 // Current Pokemon Data
 let currentPokemon = ''
 
@@ -255,7 +269,7 @@ function displayFavorites() {
     const gradientColors = getTypeGradient(primaryType);
 
     const miniCard = `
-      <article class="favorite-card relative overflow-hidden rounded-xl shadow-lg transition-all duration-300 transform hover:-translate-y-1">
+      <article class="favorite-card relative overflow-hidden rounded-xl shadow-lg transition-all duration-300 transform hover:-translate-y-1 cursor-pointer" data-id="${pokemon.id}">
         <!-- Card Background -->
         <div class="absolute inset-0 bg-gradient-to-br ${gradientColors} opacity-90"></div>
         
@@ -277,6 +291,99 @@ function displayFavorites() {
     `;
 
     favoriteCardsContainer.innerHTML += miniCard;
+  });
+}
+
+// Function to show Pokemon overlay
+function showPokemonOverlay(pokemon) {
+  // Format the ID with leading zeros
+  const formattedId = String(pokemon.id).padStart(3, '0');
+
+  // Get primary type for theming
+  const primaryType = pokemon.types[0].type.name;
+  const typeColor = getTypeColor(primaryType);
+  const gradientColors = getTypeGradient(primaryType);
+
+  // Create the overlay HTML
+  const overlay = document.createElement('div');
+  overlay.className = 'fixed inset-0 flex items-center justify-center z-50 bg-black/70 backdrop-blur-sm p-4';
+  overlay.id = 'pokemon-overlay';
+
+  // Create the overlay content using the same card structure
+  overlay.innerHTML = `
+    <article class="pokemon-card relative overflow-hidden rounded-2xl shadow-2xl w-full max-w-md animate-scaleIn">
+      <!-- Close button -->
+      <button id="close-overlay" class="absolute top-3 right-3 z-20 bg-black/20 hover:bg-black/30 text-white rounded-full p-1 transition-all">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+
+      <!-- Card Background with Gradient -->
+      <div class="absolute inset-0 bg-gradient-to-br ${gradientColors} opacity-90"></div>
+      
+      <!-- Card Content -->
+      <div class="relative p-6 z-10">
+        <!-- Card Header with Name and ID -->
+        <header class="card-header flex justify-between items-center mb-4">
+          <h2 class="text-2xl font-bold capitalize text-white">${pokemon.name}</h2>
+          <span class="text-white/70 font-mono bg-black/20 px-2 py-1 rounded-md text-sm">#${formattedId}</span>
+        </header>
+        
+        <!-- Pokemon Image -->
+        <figure class="card-image bg-white/10 backdrop-blur-sm rounded-xl flex justify-center items-center p-4 mb-6 border border-white/20">
+          <img src="${pokemon.sprite}" alt="${pokemon.name}" class="w-40 h-40 object-contain drop-shadow-lg">
+        </figure>
+        
+        <!-- Type Badges -->
+        <ul class="type-badges flex gap-2 mb-6">
+          ${pokemon.types.map(typeInfo =>
+    `<li class="type-badge px-4 py-1 rounded-full text-xs font-semibold bg-white/20 backdrop-blur-sm border border-white/10 shadow-md">${typeInfo.type.name}</li>`
+  ).join('')}
+        </ul>
+        
+        <!-- Stats -->
+        <section class="stats-container bg-black/20 backdrop-blur-sm rounded-xl p-4 mb-6 border border-white/10">
+          <h3 class="text-lg font-semibold mb-3 text-white">Stats</h3>
+          <dl class="stats space-y-2">
+            ${pokemon.stats.map(stat => {
+    const percentage = (stat.base_stat / 255) * 100;
+    return `
+              <div class="stat">
+                <div class="flex justify-between items-center mb-1">
+                  <dt class="stat-name text-white/70 text-sm">${formatStatName(stat.stat.name)}</dt>
+                  <dd class="stat-value text-white font-medium">${stat.base_stat}</dd>
+                </div>
+                <div class="w-full bg-black/30 rounded-full h-2">
+                  <div class="bg-white/80 h-2 rounded-full" style="width: ${percentage}%"></div>
+                </div>
+              </div>`;
+  }).join('')}
+          </dl>
+        </section>
+      </div>
+    </article>
+  `;
+
+  // Add to the body
+  document.body.appendChild(overlay);
+
+  // Add event listener to close the overlay
+  document.getElementById('close-overlay').addEventListener('click', () => {
+    overlay.classList.add('animate-fadeOut');
+    setTimeout(() => {
+      document.body.removeChild(overlay);
+    }, 300);
+  });
+
+  // Allow clicking outside the card to close
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) {
+      overlay.classList.add('animate-fadeOut');
+      setTimeout(() => {
+        document.body.removeChild(overlay);
+      }, 300);
+    }
   });
 }
 
