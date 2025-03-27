@@ -1,8 +1,12 @@
+<div align="center">
+
 # Route-151: Pokémon Collection & Battle TCG
 
-A progressive web application that lets you collect, battle, and trade Pokémon cards. Journey through Route-151 to become the ultimate Pokémon master!
+<img src="./images/route-151.png" width="400" alt="Route-151 Logo">
 
-![Route-151: Pokémon TCG](https://via.placeholder.com/800x400?text=Route-151+Pokemon+TCG)
+</div>
+
+A progressive web application that lets you collect, battle, and trade Pokémon cards. Journey through Route-151 to become the ultimate Pokémon master!
 
 ## Project Overview
 
@@ -46,7 +50,7 @@ This project follows a multi-tier development pathway designed to build skills i
 
 | <img src="./images/desktopview.png" width="600"> | <img src="./images/iphone16.png" width="300"> | <img src="./images/overlay.png" width="600"> |
 | :----------------------------------------------: | :-------------------------------------------: | :------------------------------------------: |
-|               Route-151 on Desktop               |              Route-151 on iPhone              |              Card Detail Overlay             |
+|               Route-151 on Desktop               |              Route-151 on iPhone              |             Card Detail Overlay              |
 
 ## Technologies Used
 
