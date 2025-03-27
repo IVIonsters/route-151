@@ -1,50 +1,52 @@
-# Pokémon Card Generator & Battle System
+# Route-151: Pokémon Collection & Battle TCG
 
-A progressive web application that evolves from a simple Pokémon card generator into a full-fledged battle system with user authentication and database integration.
+A progressive web application that lets you collect, battle, and trade Pokémon cards. Journey through Route-151 to become the ultimate Pokémon master!
 
-![Pokémon Card Generator](https://via.placeholder.com/800x400?text=Pokemon+Card+Generator)
+![Route-151: Pokémon TCG](https://via.placeholder.com/800x400?text=Route-151+Pokemon+TCG)
 
 ## Project Overview
 
 This project follows a multi-tier development pathway designed to build skills incrementally:
 
-1. **Tier 1**: ✅ Static Pokémon card generator with core web technologies
-2. **Tier 2**: React-based implementation with component architecture
-3. **Tier 3**: Full-stack battle system with authentication and database
+1. **Tier 1**: ✅ Pokémon card collection with core web technologies
+2. **Tier 2**: React-based implementation with expanded collection features
+3. **Tier 3**: Full-fledged trading card game with battles, trades, and online play
 
 ## Features
 
-### Tier 1: Pokémon Random Card Generator ✅
+### Tier 1: Pokémon Card Collection ✅
 
 - ✅ Random Pokémon card generation using PokeAPI
 - ✅ Display of Pokémon stats, image, and information
-- ✅ Save favorites functionality with Local Storage
+- ✅ Save favorites to your collection with Local Storage
 - ✅ Responsive design with Tailwind CSS
 - ✅ Clean UI with intuitive controls
-- ✅ Interactive favorites with detail view
+- ✅ Interactive collection with detail view
 
-### Tier 2: React Conversion
+### Tier 2: React Conversion & Enhanced Collection
 
 - Modular component architecture
 - Global state management with Context API
-- Multi-page routing
+- Multi-page routing with card discovery journeys
 - Enhanced UI/UX with React's dynamic rendering
-- Persistent favorites across sessions
+- Persistent collection across sessions
+- Card rarity system and special editions
 - Loading states and improved error handling
 
-### Tier 3: Battle System
+### Tier 3: Trading Card Game System
 
-- User authentication and profiles
-- Save favorite Pokémon to user account
-- Interactive battle system based on Pokémon stats
-- Battle history and statistics
-- Leaderboards and achievements
+- User authentication and trainer profiles
+- Expanded collection with card trading functionality
+- Strategic battle system based on Pokémon stats and types
+- Battle history and trainer statistics
+- Leaderboards, achievements, and special events
+- Online multiplayer battles and trading marketplace
 
 ## **Screenshots**
 
 | <img src="./images/desktopview.png" width="600"> | <img src="./images/iphone16.png" width="300"> | <img src="./images/overlay.png" width="600"> |
 | :----------------------------------------------: | :-------------------------------------------: | :------------------------------------------: |
-|               PokéCard on Desktop                |              PokéCard on iPhone               |               PokéCard Overlay               |
+|               Route-151 on Desktop               |              Route-151 on iPhone              |              Card Detail Overlay             |
 
 ## Technologies Used
 
