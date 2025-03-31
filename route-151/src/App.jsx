@@ -1,12 +1,12 @@
-
 import './App.css'
+import HomePage from './pages/HomePage'
 
 function App() {
 
 
   return (
     <>
-      <h1 className='bg-red-500'>Route - 151</h1>
+      <HomePage />
     </>
   )
 }
